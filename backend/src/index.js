@@ -12,7 +12,9 @@ app.get("/api/health", (req, res) => {
 });
 
 app.get("/api", (req, res) => {
-  res.status(200).json({ message: "Welcome in our foodie API!!!" });
+  res
+    .status(200)
+    .json({ message: "Welcome in our foodie API-developed by Mithun!!!" });
 });
 
 // make our app ready for deployment
