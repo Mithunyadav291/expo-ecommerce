@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "start": "node --watch src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,10 +14,12 @@
   "dependencies": {
     "@clerk/express": "^1.7.60",
     "cloudinary": "^2.8.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "expo_ecommerce": "file:..",
     "express": "^5.2.1",
     "inngest": "^3.48.1",
-    "mongoose": "^9.1.1"
+    "mongoose": "^9.1.1",
+    "multer": "^2.0.2"
   }
 }
