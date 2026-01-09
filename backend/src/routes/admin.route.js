@@ -4,7 +4,7 @@ import {
   deleteProduct,
   getAllCustomers,
   getAllOrders,
-  getAllProduct,
+  getAllProducts,
   getDashboardStats,
   updateOrderStatus,
   updateProduct,
@@ -18,7 +18,7 @@ const router = express.Router();
 router.use(protectRoute, adminOnly);
 
 router.post("/products", upload.array("images", 3), createProduct);
-router.get("/products", getAllProduct);
+router.get("/products", getAllProducts);
 router.put("/products/:id", upload.array("images", 3), updateProduct);
 router.delete("/products/:id", deleteProduct);
 

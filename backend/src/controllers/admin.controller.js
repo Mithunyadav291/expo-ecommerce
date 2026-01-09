@@ -46,7 +46,7 @@ export const createProduct = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-export const getAllProduct = async (req, res) => {
+export const getAllProducts = async (req, res) => {
   try {
     // -1 means in desc order: most recent products first
     const products = await Product.find().sort({ createdAt: -1 });
