@@ -1,82 +1,37 @@
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-  useUser,
-} from "@clerk/clerk-react";
-import React from "react";
-import { useEffect } from "react";
+import { Navigate, Route, Routes } from "react-router";
+import { useAuth } from "@clerk/clerk-react";
+
+import LoginPage from "./pages/LoginPage.jsx";
+import DashboardPage from "./pages/DashboardPage.jsx";
+import ProductPage from "./pages/ProductPage.jsx";
+import CustomerPage from "./pages/CustomerPage.jsx";
+import OrdersPage from "./pages/OrdersPage.jsx";
+import DashboardLayout from "./layouts/DashboardLayout.jsx";
+import PageLoader from "./components/PageLoader.jsx";
 
 const App = () => {
-  const { user } = useUser(); // get the currently signed-in user
+  const { isSignedIn, isLoaded } = useAuth();
 
+  if (!isLoaded) return <PageLoader />;
   return (
-    <div>
-      <h1>Home Page</h1>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-    </div>
+    <Routes>
+      <Route
+        path="/login"
+        element={isSignedIn ? <Navigate to={"/dashboard"} /> : <LoginPage />}
+      />
+
+      <Route
+        path="/"
+        element={isSignedIn ? <DashboardLayout /> : <Navigate to={"/login"} />}
+      >
+        <Route index element={<Navigate to={"dashboard"} />} />
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="products" element={<ProductPage />} />
+        <Route path="customers" element={<CustomerPage />} />
+        <Route path="orders" element={<OrdersPage />} />
+      </Route>
+    </Routes>
   );
 };
 
 export default App;
-
-// import {
-//   SignedIn,
-//   SignedOut,
-//   SignInButton,
-//   UserButton,
-//   useUser,
-// } from "@clerk/clerk-react";
-// import React from "react";
-
-// const App = () => {
-//   const { user } = useUser(); // get the signed-in user
-//   console.log({ user });
-//   return (
-//     <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
-//       <h1>Home Page</h1>
-
-//       <SignedOut>
-//         <SignInButton />
-//       </SignedOut>
-
-//       <SignedIn>
-//         <UserButton />
-
-//         {user && (
-//           <div style={{ marginTop: "20px", lineHeight: "1.6" }}>
-//             <h2>User Details:</h2>
-//             <p>
-//               <strong>Full Name:</strong> {user.fullName}
-//             </p>
-//             <p>
-//               <strong>Email:</strong> {user.primaryEmailAddress?.emailAddress}
-//             </p>
-//             <p>
-//               <strong>Username:</strong> {user.username}
-//             </p>
-//             <p>
-//               <strong>Profile Image:</strong>
-//               <br />
-//               <img
-//                 src={user.imageUrl}
-//                 alt="Profile"
-//                 width="100"
-//                 height="100"
-//                 style={{ borderRadius: "50%", marginTop: "10px" }}
-//               />
-//             </p>
-//           </div>
-//         )}
-//       </SignedIn>
-//     </div>
-//   );
-// };
-
-// export default App;
