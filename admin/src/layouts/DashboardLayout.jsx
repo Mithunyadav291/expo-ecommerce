@@ -10,7 +10,7 @@ const DashboardLayout = () => {
         id="my-drawer"
         type="checkbox"
         className="drawer-toggle"
-        defaultChecked
+        // defaultChecked
       />
       <div className="drawer-content">
         <Navbar />

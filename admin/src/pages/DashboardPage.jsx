@@ -67,7 +67,7 @@ const DashboardPage = () => {
             <div className="flex justify-center py-8">
               <span className="loading loading-spinner loading-lg" />
             </div>
-          ) : recentOrders.length !== 0 ? (
+          ) : recentOrders.length === 0 ? (
             <div className="text-center py-8 text-base-content/60">
               No orders yet
             </div>

@@ -10,6 +10,13 @@ export const getOrderStatusBadge = (status) => {
       return "badge-ghost";
   }
 };
+
+export const getStockStatusBadge = (stock) => {
+  if (stock === 0) return { text: "Out of Stock", class: "badge-error" };
+  if (stock < 20) return { text: "Low Stock", class: "badge-warning" };
+  return { text: "In Stock", class: "badge-success" };
+};
+
 export const capitalizeText = (text) => {
   if (!text) return text;
   return text.charAt(0).toUpperCase() + text.slice(1);

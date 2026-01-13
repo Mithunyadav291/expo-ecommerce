@@ -16,7 +16,7 @@ const Sidebar = () => {
         className="drawer-overlay"
       ></label>
       <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-18 is-drawer-open:w-64">
-        <div className="p-4 w-full">
+        <div className="p-4 w-full flex justify-between">
           <div className="flex items-center gap-3">
             <div className="size-10 bg-primary rounded-xl flex items-center justify-center shrink-0">
               <ShoppingBagIcon className="w-6 h-6 text-primary-content" />
@@ -25,6 +25,14 @@ const Sidebar = () => {
               Admin
             </span>
           </div>
+          {/* Toggle Button inside Sidebar */}
+          <label
+            htmlFor="my-drawer"
+            className="drawer-overlay btn btn-square btn-ghost is-drawer-close:hidden lg:hidden"
+            aria-label="toggle drawer"
+          >
+            <PanelLeftIcon className="size-5" />
+          </label>
         </div>
 
         <ul className="menu w-full grow flex flex-col gap-2 ">
