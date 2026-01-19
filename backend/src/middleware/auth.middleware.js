@@ -7,7 +7,7 @@ export const protectRoute = [
   async (req, res, next) => {
     try {
       const clerkId = req.auth().userId;
-      console.log("clerkId:", clerkId);
+      // console.log("clerkId:", clerkId);
       if (!clerkId)
         return res
           .status(401)
@@ -30,7 +30,7 @@ export const adminOnly = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({ message: "Unauthorized - user not found" });
   }
-  console.log("email:", req.user.email);
+  // console.log("email:", req.user.email);
   if (req.user.email !== ENV.ADMIN_EMAIL) {
     return res.status(403).json({ message: "Forbidden - admin access only" });
   }
