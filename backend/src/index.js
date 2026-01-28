@@ -25,9 +25,10 @@ app.use(clerkMiddleware()); //req.auth will be available
 
 app.use(
   cors({
-    origin: ENV.CLIENT_URL,
+    // origin: ENV.CLIENT_URL,
+    origin: true,
     credentials: true,
-  })
+  }),
 );
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
