@@ -1,6 +1,7 @@
 import { User } from "../models/user.model.js";
 
 export const addAddress = async (req, res) => {
+  console.log("adding address");
   try {
     const {
       label,
@@ -160,12 +161,10 @@ export const removeFromWishlist = async (req, res) => {
     user.wishlist.pull(productId);
     await user.save();
 
-    res
-      .status(200)
-      .json({
-        message: "Product removed from wishlist",
-        wishlist: user.wishlist,
-      });
+    res.status(200).json({
+      message: "Product removed from wishlist",
+      wishlist: user.wishlist,
+    });
   } catch (error) {
     console.error("Error in removeFromWishlist controller:", error);
     res.status(500).json({ error: "Internal server error" });
