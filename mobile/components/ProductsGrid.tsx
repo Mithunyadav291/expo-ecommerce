@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Product } from "@/types";
 import useWishlist from "@/hooks/useWishlist";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,6 +21,11 @@ interface ProductsGridProps {
 }
 
 const ProductsGrid = ({ products, isLoading, isError }: ProductsGridProps) => {
+  const [loadingCartId, setLoadingCartId] = useState<string | null>(null);
+  const [loadingWishlistId, setLoadingWishlistId] = useState<string | null>(
+    null,
+  );
+
   const {
     isInWishlist,
     toggleWishlist,
@@ -30,20 +35,29 @@ const ProductsGrid = ({ products, isLoading, isError }: ProductsGridProps) => {
   const { addToCart, isAddingToCart } = useCart();
 
   const handleAddToCart = (productId: string, productName: string) => {
+    setLoadingCartId(productId);
     addToCart(
       { productId, quantity: 1 },
       {
         onSuccess: () => {
           Alert.alert("Success", `${productName} added to cart!`);
+          setLoadingCartId(null);
         },
         onError: (error: any) => {
           Alert.alert(
             "Error",
             error?.response?.data?.error || "Failed to add to cart",
           );
+          setLoadingCartId(null);
         },
       },
     );
+  };
+
+  const handleToggleWishlist = async (productId: string) => {
+    setLoadingWishlistId(productId);
+    await toggleWishlist(productId);
+    setLoadingWishlistId(null);
   };
 
   const renderProduct = ({ item: product }: { item: Product }) => (
@@ -62,10 +76,11 @@ const ProductsGrid = ({ products, isLoading, isError }: ProductsGridProps) => {
         <TouchableOpacity
           className="absolute top-3 right-3 bg-black/30 backdrop-blur-xl p-2 rounded-full"
           activeOpacity={0.7}
-          onPress={() => toggleWishlist(product._id)}
+          onPress={() => handleToggleWishlist(product._id)}
+          // onPress={() => toggleWishlist(product._id)}
           disabled={isAddingToWishlist || isRemovingFromWishlist}
         >
-          {isAddingToWishlist || isRemovingFromWishlist ? (
+          {loadingWishlistId === product._id ? (
             <ActivityIndicator size="small" color="#FFFFFF" />
           ) : (
             <Ionicons
@@ -110,7 +125,7 @@ const ProductsGrid = ({ products, isLoading, isError }: ProductsGridProps) => {
             onPress={() => handleAddToCart(product._id, product.name)}
             disabled={isAddingToCart}
           >
-            {isAddingToCart ? (
+            {isAddingToCart && loadingCartId === product._id ? (
               <ActivityIndicator size="small" color="#121212" />
             ) : (
               <Ionicons name="add" size={18} color="#121212" />

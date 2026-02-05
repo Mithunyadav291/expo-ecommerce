@@ -88,7 +88,6 @@ const CartScreen = () => {
   };
 
   const handleProceedWithPayment = async (selectedAddress: Address) => {
-    console.log(selectedAddress);
     setAddressModalVisible(false);
 
     try {
